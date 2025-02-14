@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #ffebee;
+      font-family: 'Arial', sans-serif;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 90%;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #ff4081;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesButton, #confirmYes {
+      background-color: #ff4081;
+      color: white;
+    }
+
+    #noButton, #confirmNo {
+      background-color: #e0e0e0;
+      color: black;
+    }
+
+    #yesButton.big {
+      transform: scale(1.2);
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    #noMessage {
+      font-size: 16px;
+      color: #ff4081;
+      margin-top: 10px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div id="introPage" class="container">
+    <h1>Happy Valentine's Babi! 💖</h1>
+    <button id="proceedButton">Let's Go!</button>
+  </div>
+
+  <div id="datePage" class="container" style="display: none;">
+    <h1>Would you like to go on a date?</h1>
+    <div id="noMessage"></div>
+    <div class="buttons">
+      <button id="yesButton">Yes</button>
+      <button id="noButton">No</button>
+    </div>
+    <div id="confirmMessage" class="message">
+      <p>I'll be there tomorrow, is it okay?</p>
+      <div class="buttons">
+        <button id="confirmYes">Yes</button>
+        <button id="confirmNo" disabled>No</button>
+      </div>
+    </div>
+    <div id="dateMessage" class="message">
+      <p>Can't wait to see you there! 🥰</p>
+    </div>
+  </div>
+
+  <script>
+    const introPage = document.getElementById('introPage');
+    const datePage = document.getElementById('datePage');
+    const proceedButton = document.getElementById('proceedButton');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const dateMessage = document.getElementById('dateMessage');
+    const confirmMessage = document.getElementById('confirmMessage');
+    const confirmYes = document.getElementById('confirmYes');
+    const noMessage = document.getElementById('noMessage');
+
+    const noMessages = [
+      "Woah",
+      "Nah uhh",
+      "You don't love me?",
+      "Really? 😢",
+      "I'm not giving up!",
+      "Just say yes already!",
+      "Pretty please? 🥺",
+      "You're breaking my heart 💔",
+    ];
+
+    let noClickCount = 0;
+
+    proceedButton.addEventListener('click', () => {
+      introPage.style.display = 'none';
+      datePage.style.display = 'block';
+    });
+
+    yesButton.addEventListener('click', () => {
+      yesButton.style.display = 'none';
+      noButton.style.display = 'none';
+      noMessage.style.display = 'none';
+      confirmMessage.style.display = 'block';
+    });
+
+    confirmYes.addEventListener('click', () => {
+      confirmMessage.style.display = 'none';
+      dateMessage.style.display = 'block';
+    });
+
+    noButton.addEventListener('click', () => {
+      noMessage.textContent = noMessages[noClickCount % noMessages.length];
+      noMessage.style.display = 'block';
+      noClickCount++;
+
+      const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+      yesButton.style.fontSize = `${currentSize * 1.2}px`;
+
+      const currentNoSize = parseFloat(window.getComputedStyle(noButton).fontSize);
+      if (currentNoSize > 5) {
+        noButton.style.fontSize = `${currentNoSize * 0.8}px`;
+      } else {
+        noButton.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
